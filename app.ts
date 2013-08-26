@@ -1,10 +1,5 @@
 /// <reference path="angularjs/angular.d.ts" />
 
-function padLeft(nr:string, n:number, str?:string) {
-    var padding = Array(n - nr.length + 1).join(str || '0');
-    return padding+nr;
-}
-
 class multiplier {
     constructor($scope) {
         $scope.m0 = "";
@@ -23,7 +18,7 @@ class multiplier {
             }
             plen *= 2;
 
-            var padded = padLeft(m0, plen);
+            var padded = Array(plen - m0.length + 1).join('0') + m0;
             return padded.split('');
         }
     }
