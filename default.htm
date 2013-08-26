@@ -1,18 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
-<html lang="en">
+<html ng-app lang="en">
 <head>
     <meta charset="utf-8" />
     <title>TypeScript HTML App</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     <script src="app.js"></script>
 </head>
-<body>
+<body ng-controller="multiplier">
 
-<div>
-  <input></input>
-  <input disabled=disabled></input>
-</div>
+<input ng-model="m0"></input>
+<input ng-model="m1"></input>
+
+<table >
+    <tr>
+    <td ng-repeat="d in digitize0(m0, m1)">{{d}}</td>
+    </tr>
+
+    <tr>
+    <td ng-repeat="d in digitize0(m1, m0)">{{d}}</td>
+    </tr>
+
+
+</table>
 
 </body>
 </html>
