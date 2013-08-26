@@ -1,8 +1,25 @@
-﻿body
-{
-    font-family: 'Segoe UI', sans-serif
+﻿body { font-family: sans-serif; }
+
+.coefficient {
+    font-size: 8pt;
+    width: 30pt;
+    height: 10pt;
+    padding-left: 4pt;
+    background: white;
+    padding-top: 2pt;
 }
 
-span {
-    font-style: italic
+input {
+    font-size: 10pt;
+    padding-left: 4pt;
+}
+
+table
+{
+    border-collapse:collapse;
+}
+
+table, td, th
+{
+    border:1px solid black;
 }
