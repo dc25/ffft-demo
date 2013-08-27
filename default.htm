@@ -14,8 +14,8 @@
 <input ng-model="m1"></input>
 
 <table >
-    <tr ng-repeat="r in transformationRows(m0,m1)">
-    <td ng-repeat="c in transformationColumns(m0, m1)" class="coefficient">{{r+" "+c}}</td>
+    <tr ng-repeat="r in t0.coefficients">
+    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
 </table>
 
