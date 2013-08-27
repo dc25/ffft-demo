@@ -14,15 +14,9 @@
 <input ng-model="m1"></input>
 
 <table >
-    <tr>
-    <td ng-repeat="d in digitize0(m0, m1)" class="coefficient">{{d}}</td>
+    <tr ng-repeat="r in transformationRows(m0,m1)">
+    <td ng-repeat="c in transformationColumns(m0, m1)" class="coefficient">{{r+" "+c}}</td>
     </tr>
-
-    <tr>
-    <td ng-repeat="d in digitize0(m1, m0)" class="coefficient">{{d}}</td>
-    </tr>
-
-
 </table>
 
 </body>
