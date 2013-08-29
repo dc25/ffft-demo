@@ -43,15 +43,33 @@ class Transform {
 
     public coefficients: Complex[][];
 
-    computeCoefficient(row: number , column: number, bitCount: number): Complex {
+    computeCoefficient(row: number, column: number, bitCount: number): Complex {
         var t = column >>> row;
         var s = column - (t << row);
-        var bitMask = (1 << (row-1)) - 1; // to mask all but the high bit of s.
+        var bitMask = (1 << (row - 1)) - 1; // to mask all but the high bit of s.
         var sHighBitRemoved = s & bitMask;
-        var iRe = (t << (row-1)) + sHighBitRemoved;
+        var iRe = (t << (row - 1)) + sHighBitRemoved;
         var iIm = iRe + (1 << (bitCount - 1));
         var rotation = Complex.powerOfE(2 * Math.PI * column / (1 << row));
         return Complex.add(this.coefficients[row - 1][iRe], Complex.mul(rotation, this.coefficients[row - 1][iIm]));
+    }
+
+    computeCoefficients(firstRow: Complex[], rowCount: number): void {
+
+        var bitCount = rowCount - 1;
+        var columnCount = firstRow.length;
+        
+        this.coefficients = [];
+        this.coefficients.push(firstRow);
+ 
+        for (var r = 1; r < rowCount; r++) {
+            var workingRow = [];
+            for (var c = 0; c < columnCount; c++) {
+                var coef = this.computeCoefficient(r, c, bitCount);
+                workingRow.push(coef);
+            }
+            this.coefficients.push(workingRow);
+        }
     }
     
     computeTransform() : void {
@@ -68,23 +86,14 @@ class Transform {
         bitCount += 1;
         var rowCount = bitCount + 1;
 
-        this.coefficients = [];
 
         var workingRow = [];
         for (var c = 0; c < columnCount; c++) {
             var digit:number = (c < this.primaryValue.length) ? parseInt(this.primaryValue[this.primaryValue.length-c-1]) : 0;
             workingRow.push(new Complex(digit, 0));
         }
-        this.coefficients.push(workingRow);
 
-        for (var r = 1; r < rowCount; r++) {
-            workingRow = [];
-            for (var c = 0; c < columnCount; c++) {
-                var coef = this.computeCoefficient(r, c, bitCount);
-                workingRow.push(coef);
-            }
-            this.coefficients.push(workingRow);
-        }
+        this.computeCoefficients(workingRow, rowCount);
     }
 
     updatePrimary(newValue: string):void {
