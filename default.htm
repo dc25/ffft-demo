@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html ng-app lang="en">
 <head>
@@ -17,7 +17,21 @@
     <tr ng-repeat="r in t0.coefficients">
     <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
+    <tr ng-repeat="r in t1.coefficients">
+    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
+    </tr>
+    <tr ng-repeat="r in product.coefficients">
+    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
+    </tr>
+    <tr>
+    <td ng-repeat="n in scaled" class="coefficient">{{n  | number:2 }}</td>
+    </tr>
+    <tr>
+    <td ng-repeat="n in result" class="coefficient">{{n  | number:0 }}</td>
+    </tr>
+
 </table>
+
 
 </body>
 </html>
