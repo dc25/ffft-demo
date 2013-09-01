@@ -106,7 +106,7 @@ class Transform {
         {
             var totalDigit = slr[i] + carry0+.001; // .001 to assure tiny negative numbers don't get floored to -1
             var carry1 = Math.floor((totalDigit) / 10);
-            res.push(totalDigit - carry1 * 10);
+            res.push(Math.round(totalDigit - carry1 * 10));
             carry0 = carry1;
         }
         return res;
@@ -143,6 +143,22 @@ class multiplier {
         return res;
     }
 
+    digitsToString(p: number[]): string {
+        // find the highest order non-zero digit.
+        var i;
+        for (i = p.length - 1; i > 0; i--) {
+            if (p[i]) {
+                break;
+            }
+        }
+
+        var res: string = "";
+        for (; i >= 0; i--) {
+            res = res.concat(p[i]);  // inefficient but probably not significantly.
+        }
+        return res;
+    }
+
 
     compute($scope: any):void {
         $scope.t0 = new Transform(this.integersToCoefficients($scope.m0, $scope.m1));
@@ -150,6 +166,7 @@ class multiplier {
         $scope.product = new Transform(this.convolute($scope.t0.lastRow(), $scope.t1.lastRow()), false);
         $scope.scaled = $scope.product.scaledLastRow();
         $scope.result = $scope.product.digitsLastRow();
+        $scope.finalResult = this.digitsToString($scope.result);
     }
 
 
