@@ -6,7 +6,6 @@ body {
 
 .coefficient {
     font-size: 8pt;
-    height: 10pt;
     padding-left: 4pt;
     background: white;
     padding-top: 2pt;
@@ -15,12 +14,19 @@ body {
 table
 {
     clear: left;
+    position: relative;
+    left: 20px;
     border-collapse:collapse;
 }
 
 table, td, th
 {
     border:1px solid black;
+}
+
+
+tbody {
+  border: 3px solid black;
 }
 
 #theForm {
@@ -45,7 +51,4 @@ table, td, th
     width: 580px;
 }
 
-.blankRow {
-  height: 10px !important;
-  background-color: #FFFFFF;
-}
+fieldset { border:0px;}

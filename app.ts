@@ -115,17 +115,48 @@ class Transform {
 
 class multiplier {
 
-    integersToCoefficients(primaryValue: string, secondaryValue: string): Complex[] {
-
+    // The lowest power of two greater than the number of digits in both values.
+    columnCount(primaryValue: string, secondaryValue: string): number {
         var maxlen = Math.max(primaryValue.length, secondaryValue.length);
 
         var columnCount = 1;
-        for (maxlen--; maxlen; maxlen>>>=1) {
-            columnCount<<=1;
+        for (maxlen--; maxlen; maxlen >>>= 1) {
+            columnCount <<= 1;
         }
         columnCount <<= 1;
+        return columnCount;
 
-        var res:Complex[] = [];
+    }
+
+    makeLabels($scope: any, columnCount: number): void {
+
+        if ($scope.columnLabels !== undefined && columnCount == $scope.columnLabels.length) {
+            return;
+        }
+
+        if (columnCount == 0) {
+            $scope.columnLabels = [];
+            return;
+        }
+
+        // create pad string of zeros.
+        var rowCount = 0;
+        var pad = "";
+        for (var pc = columnCount-1; pc; pc >>= 1) {
+            rowCount += 1;
+            pad = pad.concat("0");
+        }
+        var res: string[] = [];
+        for (var i = 0; i < columnCount; i++) {
+            var unpadded = i.toString(2);
+            var label = (pad + unpadded).substr(unpadded.length, rowCount);
+            res.push(label);
+        }
+        $scope.columnLabels = res;
+    }
+
+    stringToCoefficients(primaryValue: string, columnCount: number): Complex[] {
+        var res: Complex[] = [];
         for (var c = 0; c < columnCount; c++) {
             var digit: number = (c < primaryValue.length) ? parseInt(primaryValue[primaryValue.length - c - 1]) : 0;
             res.push(new Complex(digit, 0));
@@ -160,9 +191,11 @@ class multiplier {
     }
 
 
-    compute($scope: any):void {
-        $scope.t0 = new Transform(this.integersToCoefficients($scope.m0, $scope.m1));
-        $scope.t1 = new Transform(this.integersToCoefficients($scope.m1, $scope.m0));
+    compute($scope: any): void {
+        var cc = this.columnCount($scope.m0, $scope.m1);
+        this.makeLabels($scope, cc);
+        $scope.t0 = new Transform(this.stringToCoefficients($scope.m0, cc));
+        $scope.t1 = new Transform(this.stringToCoefficients($scope.m1, cc));
         $scope.product = new Transform(this.convolute($scope.t0.lastRow(), $scope.t1.lastRow()), false);
         $scope.scaled = $scope.product.scaledLastRow();
         $scope.result = $scope.product.digitsLastRow();
@@ -173,6 +206,7 @@ class multiplier {
     constructor($scope) {
         $scope.m0 = "2642";
         $scope.m1 = "5821";
+        $scope.columnLabels = [];
 
         this.compute($scope);
 

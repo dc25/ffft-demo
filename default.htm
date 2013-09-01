@@ -31,25 +31,42 @@
 </form>
 
 <table >
+    <tbody>
+    <tr>
+    <td ng-repeat="label in columnLabels">{{label}}</td>
+    </tr>
+    </tbody>
+
+    <tbody>
     <tr ng-repeat="r in t0.coefficients">
     <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
-    <tr class="blankRow"></tr>
+    </tbody>
+
+    <tbody>
     <tr ng-repeat="r in t1.coefficients">
     <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
-    <tr class="blankRow"></tr>
+    </tbody>
+
+    <tbody>
     <tr ng-repeat="r in product.coefficients">
     <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
-    <tr class="blankRow"></tr>
+    </tbody>
+
+    <tbody>
     <tr>
     <td ng-repeat="n in scaled" class="coefficient">{{n  | number:2 }}</td>
     </tr>
-    <tr class="blankRow"></tr>
+    </tbody>
+
+    <tbody>
     <tr>
     <td ng-repeat="n in result" class="coefficient">{{n  | number:0 }}</td>
     </tr>
+    </tbody>
+
 </table>
 
 
