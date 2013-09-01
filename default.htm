@@ -10,8 +10,25 @@
 </head>
 <body ng-controller="multiplier">
 
-<input ng-model="m0"></input>
-<input ng-model="m1"></input>
+
+<form id="theForm">
+    <fieldset>
+        <div>
+            <input  ng-model="m0" type=text name=m0 id=m0>
+        </div>
+            
+        <div>
+            <input  ng-model="m1" type=text name=m1 id=m1>
+            <label for="m1">X</label>
+        </div>
+        <hr>
+        <div>
+            <span id="product">This is the output</span>
+            <span id="equalSign">=</span>
+        </div>
+
+    </fieldset>
+</form>
 
 <table >
     <tr ng-repeat="r in t0.coefficients">
