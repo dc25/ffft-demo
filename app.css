@@ -6,7 +6,6 @@ body {
 
 .coefficient {
     font-size: 8pt;
-    width: 30pt;
     height: 10pt;
     padding-left: 4pt;
     background: white;
@@ -46,3 +45,7 @@ table, td, th
     width: 580px;
 }
 
+.blankRow {
+  height: 10px !important;
+  background-color: #FFFFFF;
+}
