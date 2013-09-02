@@ -41,6 +41,10 @@ class Complex {
     }
 }
 
+
+// A Transform is an array of complex numbers. 
+// Each row of complex numbers in the Transform is a step in the process of transforming the coefficients
+// of a polynomial to the Finite Fourier Transform of that polynomial ( or vice-versa ).
 class Transform {
 
     public coefficients: Complex[][];
@@ -128,6 +132,8 @@ class multiplier {
 
     }
 
+    // Generate arrays of strings useful for decorating the web page that 
+    // illustrates using fast finite fourier transforms to multiply numbers together.
     makeLabels($scope: any, columnCount: number): void {
 
         if ($scope.columnLabels !== undefined && columnCount == $scope.columnLabels.length) {
@@ -169,6 +175,8 @@ class multiplier {
         }
     }
 
+    // Convert an integer represented as a string into an array of complex coefficients.
+    // The real part of each coefficient holds one digit of the number.  The imaginary part is zero.
     stringToCoefficients(primaryValue: string, columnCount: number): Complex[] {
         var res: Complex[] = [];
         for (var c = 0; c < columnCount; c++) {
@@ -180,6 +188,7 @@ class multiplier {
 
     }
 
+    // Term by term multiplication of two arrays of complex numbers.
     convolute(r0: Complex[], r1: Complex[]): Complex[] {
         var res:Complex[] = [];
         for (var i = 0; i < r1.length; i++) {
@@ -188,6 +197,24 @@ class multiplier {
         return res;
     }
 
+
+    // Convert a number represented as coefficients of powers of 10 to another such "number".
+    // The input may have coefficients greater than 10 but the output will not.  The result 
+    // can be regarded as an array of digits.
+    convertToSingleDigits(multipleDigits: number[]): number[] {
+        var res: number[] = [];
+        var carry0 = 0;
+        for (var i = 0; i < multipleDigits.length; i++)
+        {
+            var totalDigit = multipleDigits[i] + carry0 + .001; // .001 to assure tiny negative numbers don't get floored to -1
+            var carry1 = Math.floor((totalDigit) / 10);
+            res.push(Math.round(totalDigit - carry1 * 10));
+            carry0 = carry1;
+        }
+        return res;
+    }
+
+    // Given a number represented as an array of digits generate a string representation.
     digitsToString(p: number[]): string {
         // find the highest order non-zero digit.
         var i;
@@ -204,7 +231,6 @@ class multiplier {
         return res;
     }
 
-
     compute($scope: any): void {
         var cc = this.columnCount($scope.m0, $scope.m1);
         this.makeLabels($scope, cc);
@@ -212,7 +238,7 @@ class multiplier {
         $scope.t1 = new Transform(this.stringToCoefficients($scope.m1, cc));
         $scope.product = new Transform(this.convolute($scope.t0.lastRow(), $scope.t1.lastRow()), false);
         $scope.scaled = $scope.product.scaledLastRow();
-        $scope.result = $scope.product.digitsLastRow();
+        $scope.result = this.convertToSingleDigits($scope.scaled);
         $scope.finalResult = this.digitsToString($scope.result);
     }
 
