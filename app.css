@@ -2,7 +2,26 @@ body {
     margin:0;
     padding:0;
     font-family: sans-serif; 
+    background-color: lightgrey;
 }
+
+h1 {
+    text-align: center;
+}
+
+.tab {
+    margin-left: 40px;
+}
+
+hr.pageBreak {
+    height: 2px;
+    background-color:black;
+    border:none   
+}
+
+hr.multiplyLine {
+    height:1px;
+   }
 
 .coefficient {
     font-size: 8pt;
@@ -13,15 +32,28 @@ body {
 
 table
 {
+    font-size: 10pt;
+    background-color: pink;
     clear: left;
     position: relative;
     left: 20px;
     border-collapse:collapse;
+    text-align: center;
 }
 
 table, td, th
 {
     border:1px solid black;
+}
+
+td 
+{
+    white-space: nowrap;
+}
+
+.rowLabel
+{
+    border-right:3px solid black;
 }
 
 
@@ -41,7 +73,7 @@ tbody {
 #theForm label, #equalSign {
     display:inline-block;
     position: absolute;
-    bottom: 0;
+    top: 0;
     width: 25px;
     text-align: right;
 }

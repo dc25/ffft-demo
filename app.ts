@@ -140,19 +140,33 @@ class multiplier {
         }
 
         // create pad string of zeros.
-        var rowCount = 0;
+        var bitCount = 0;
         var pad = "";
         for (var pc = columnCount-1; pc; pc >>= 1) {
-            rowCount += 1;
+            bitCount += 1;
             pad = pad.concat("0");
         }
         var res: string[] = [];
         for (var i = 0; i < columnCount; i++) {
             var unpadded = i.toString(2);
-            var label = (pad + unpadded).substr(unpadded.length, rowCount);
+            var label = (pad + unpadded).substr(unpadded.length, bitCount);
             res.push(label);
         }
         $scope.columnLabels = res;
+
+        var stars: string = "**********************************************"; 
+        var subscripts: string[] = [];
+        for (var i = 0; i < bitCount + 1; i++) {
+            var start: string = i ? stars.slice(-i) : "-";
+            var finish: string = bitCount - i ? stars.slice(-(bitCount - i)) : "-";
+            subscripts.push(start + "|" + finish);
+        }
+        $scope.rowSubscripts = subscripts;
+        $scope.rowReverseSubscripts = [];
+        for (var i = 0; i < subscripts.length; i++)
+        {
+            $scope.rowReverseSubscripts.push(subscripts[subscripts.length - i - 1]);
+        }
     }
 
     stringToCoefficients(primaryValue: string, columnCount: number): Complex[] {

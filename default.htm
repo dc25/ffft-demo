@@ -3,14 +3,16 @@
 <html ng-app lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>TypeScript HTML App</title>
+    <title>Multiplication is Easier When It's Complex</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     <script src="app.js"></script>
 </head>
 <body ng-controller="multiplier">
 
-
+<h1>Multiplication is Easier When It's Complex</h1>
+<p class="tab">The purpose of this page is to demonstrate the Sch&#246;nhage-Strassen technique, the use of Fast Finite Fourier Transforms to perform multiplication in n(log(n)) time.  Enter two integers in the input windows.  The product of the two is updated in real time along with all intermediate calculations.  For an explanation of this technique and all the notation used on this page see <a href="http://www.ams.org/samplings/feature-column/fcarc-multiplication">this article</a>.  <a href="mailto:davecompton200@gmail.com">Email me</a> if you have any comments or questions.</p>
+<hr class="pageBreak"/>
 <form id="theForm">
     <fieldset>
         <div>
@@ -21,54 +23,59 @@
             <input  ng-model="m1" type=text name=m1 id=m1>
             <label for="m1">X</label>
         </div>
-        <hr>
-        <div>
+        <hr class="multiplyLine"/>
+        <div class="displayResult">
             <span id="product">{{finalResult}}</span>
             <span id="equalSign">=</span>
         </div>
 
     </fieldset>
 </form>
-
+<hr class="pageBreak" />
 <table >
     <tbody>
     <tr>
-    <td ng-repeat="label in columnLabels">{{label}}</td>
+        <td class="rowLabel">r = p X q</td>
+        <td ng-repeat="label in columnLabels">{{label}}</td>
     </tr>
     </tbody>
 
     <tbody>
     <tr ng-repeat="r in t0.coefficients">
-    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
+        <td class="rowLabel">{{($first||$last) && 'p' || '' }}<sub>{{$first && 't' || '' }}{{$last && 's' || '' }}</sub>{{($first||$last) && '=' || '' }}p&#772<sub>{{rowSubscripts[$index]}}</sub></td>
+        <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
     </tbody>
 
     <tbody>
     <tr ng-repeat="r in t1.coefficients">
-    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
+        <td class="rowLabel">{{($first||$last) && 'q' || '' }}<sub>{{$first && 't' || '' }}{{$last && 's' || '' }}</sub>{{($first||$last) && '=' || '' }}q&#772<sub>{{rowSubscripts[$index]}}</sub></td>
+        <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
     </tbody>
 
     <tbody>
     <tr ng-repeat="r in product.coefficients">
-    <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
+        <td class="rowLabel">{{($first||$last) && 'r' || '' }}<sub>{{$first && 's' || '' }}{{$last && 't' || '' }}</sub>{{($first||$last) && '=' || '' }}r&#772<sub>{{rowReverseSubscripts[$index]}}</sub></td>
+        <td ng-repeat="c in r" class="coefficient">{{c.toString()}}</td>
     </tr>
     </tbody>
 
     <tbody>
     <tr>
-    <td ng-repeat="n in scaled" class="coefficient">{{n  | number:2 }}</td>
+        <td class="rowLabel">r<sub>t</sub>/length(r)</sub></td>
+        <td ng-repeat="n in scaled" class="coefficient">{{n  | number:2 }}</td>
     </tr>
     </tbody>
 
     <tbody>
     <tr>
-    <td ng-repeat="n in result" class="coefficient">{{n  | number:0 }}</td>
+        <td class="rowLabel">carried</td>
+        <td ng-repeat="n in result" class="coefficient">{{n  | number:0 }}</td>
     </tr>
     </tbody>
 
 </table>
-
 
 </body>
 </html>
