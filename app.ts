@@ -102,19 +102,6 @@ class Transform {
         return res;
     }
 
-    digitsLastRow(): number[]{
-        var slr = this.scaledLastRow();
-        var res: number[] = [];
-        var carry0 = 0;
-        for (var i = 0; i < slr.length; i++)
-        {
-            var totalDigit = slr[i] + carry0+.001; // .001 to assure tiny negative numbers don't get floored to -1
-            var carry1 = Math.floor((totalDigit) / 10);
-            res.push(Math.round(totalDigit - carry1 * 10));
-            carry0 = carry1;
-        }
-        return res;
-    }
 }
 
 class multiplier {
